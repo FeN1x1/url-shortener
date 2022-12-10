@@ -6,13 +6,17 @@ import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
 
+import { default as Layout } from "../components/layout/Index";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </SessionProvider>
   );
 };
