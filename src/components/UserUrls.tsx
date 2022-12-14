@@ -21,10 +21,7 @@ const UserUrls = () => {
     return true;
   };
   return (
-    // <div className="flex gap-4 text-white">
-
-    // </div>
-    <div className="overflow-x-auto">
+    <div className="z-[2] overflow-x-auto">
       <table className="table-compact table w-full">
         <thead>
           <tr>
