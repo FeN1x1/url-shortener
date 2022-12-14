@@ -8,3 +8,4 @@ export const authRouter = router({
     return "you can now see this secret message!";
   }),
 });
+  
