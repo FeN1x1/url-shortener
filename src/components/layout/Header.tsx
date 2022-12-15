@@ -11,9 +11,12 @@ export const Header = () => {
           <Link href="/">Home</Link>
         </li>
         {sessionData && (
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
+          <>
+            <li>
+              <Link href="/profile">Profile</Link>
+            </li>
+            <li className="ml-auto">{sessionData.user?.email}</li>
+          </>
         )}
 
         {!sessionData ? (

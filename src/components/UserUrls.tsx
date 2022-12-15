@@ -37,12 +37,20 @@ const UserUrls = () => {
               return (
                 <tr key={u.id}>
                   <th>{u.id}</th>
-                  <th onClick={handleUrlClick}>{u.url}</th>
+                  <th className="transition duration-150 hover:text-purple-700">
+                    <a
+                      target="_blank"
+                      href={`https://${u.url}`}
+                      rel="noreferrer"
+                    >
+                      {u.url}
+                    </a>
+                  </th>
                   <th
                     className="cursor-pointer transition duration-150 hover:text-purple-700"
                     onClick={handleUrlToRedirectClick}
                   >
-                    <Link href={`/${u.urlToRedirect}`}>{u.urlToRedirect}</Link>
+                    <Link href={`${u.urlToRedirect}`}>{u.urlToRedirect}</Link>
                   </th>
                   <th
                     className="cursor-pointer transition duration-150 hover:text-red-400"

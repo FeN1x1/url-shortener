@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { trpc } from "../utils/trpc";
 import UserNameModal from "./UserNameModal";
@@ -7,22 +6,25 @@ const UserProfile = () => {
   const [isOpenUserNameModal, setIsOpenUserModal] = useState(false);
   const [username, setUsername] = useState("");
 
-  const { mutate: changeName } = trpc.auth.changeName.useMutation();
+  const { mutate: changeName } = trpc.auth.changeName.useMutation({
+    onSuccess: () => refetchName(),
+  });
+  const { data: user, refetch: refetchName } = trpc.auth.getName.useQuery();
 
-  const { data: sessionData } = useSession();
-
-  const handleSetIsOpenUserModal = (isOpenPar: boolean) => {
-    setIsOpenUserModal(isOpenPar);
-    changeName({ id: sessionData?.user?.id ?? "", name: username });
+  const handleSubmit = () => {
+    setIsOpenUserModal(false);
+    setUsername("");
+    changeName({ id: user?.id ?? "", name: username });
   };
 
   return (
     <div className="z-[2] overflow-x-auto">
       <UserNameModal
         isOpen={isOpenUserNameModal}
-        setIsOpen={handleSetIsOpenUserModal}
+        setIsOpen={(par) => setIsOpenUserModal(par)}
         usernameValue={username}
         setUsernameValue={setUsername}
+        handleSubmit={handleSubmit}
       />
       <table className="table-compact table w-full">
         <thead>
@@ -30,24 +32,22 @@ const UserProfile = () => {
             <th>Id</th>
             <th>Name</th>
             <th>Email</th>
-            {/* <th>Edit name</th> */}
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th onClick={() => ({})}>{sessionData?.user?.id}</th>
+            <th>{user?.id}</th>
             <th
-              className={`${
-                sessionData?.user?.name === null ? "text-red-500" : ""
+              className={`cursor-pointer transition duration-150 hover:text-purple-700 ${
+                user?.name === null || user?.name === "" ? "text-red-500" : ""
               }`}
-              onClick={() => ({})}
+              onClick={() => setIsOpenUserModal(true)}
             >
-              {sessionData?.user?.name ?? "No name set yet"}
+              {user?.name === null || user?.name === ""
+                ? "No name set yet"
+                : user?.name}
             </th>
-            <th onClick={() => ({})}>{sessionData?.user?.email}</th>
-            <th>
-              <button onClick={() => setIsOpenUserModal(true)}>sds</button>
-            </th>
+            <th>{user?.email}</th>
           </tr>
         </tbody>
       </table>

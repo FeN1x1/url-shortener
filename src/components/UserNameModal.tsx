@@ -6,19 +6,15 @@ const UserNameModal = ({
   setIsOpen,
   usernameValue,
   setUsernameValue,
+  handleSubmit,
 }: {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   usernameValue: string;
   setUsernameValue: (usernameValue: string) => void;
+  handleSubmit: () => void;
 }) => {
   const isUsernameEmpty = usernameValue === "";
-
-  const closeModal = () => {
-    if (!isUsernameEmpty) {
-      setIsOpen(false);
-    }
-  };
 
   return (
     <div className="z-[1]">
@@ -51,10 +47,10 @@ const UserNameModal = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gradient-to-b from-[#2e026d] to-[#15162c] p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="pb-2 text-center text-lg font-medium leading-6 text-purple-400"
                   >
                     Change name
                   </Dialog.Title>
@@ -66,19 +62,19 @@ const UserNameModal = ({
                       onChange={(e) => setUsernameValue(e.target.value)}
                     />
                     {isUsernameEmpty && (
-                      <span className="text-center text-red-500">
+                      <span className="pt-3 text-center text-lg font-medium leading-6 text-red-400">
                         Name cannot be empty!
                       </span>
                     )}
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 flex">
                     <button
                       type="button"
                       className={`${
                         isUsernameEmpty && "cursor-not-allowed"
-                      } inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
-                      onClick={closeModal}
+                      } mx-auto mt-4 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-lg font-medium leading-6 text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
+                      onClick={handleSubmit}
                     >
                       Got it, thanks!
                     </button>

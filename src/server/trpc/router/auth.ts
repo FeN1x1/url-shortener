@@ -20,4 +20,11 @@ export const authRouter = router({
         },
       });
     }),
+  getName: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+    });
+  }),
 });
